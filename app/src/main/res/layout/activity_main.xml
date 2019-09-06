@@ -4,29 +4,90 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <TextView
-        android:id="@+id/baseView"
-        android:layout_marginTop="30dp"
+        android:id="@+id/titleView"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
         android:layout_width="350dp"
-        android:layout_height="350dp"
+        android:layout_height="180dp"
         android:fontFamily="@font/yumin"
-        android:textSize="250sp"
+        android:text="常用漢字\n勉強\nアップり"
+        android:textSize="50sp"
         android:textAlignment="center"
         android:layout_centerHorizontal="true"/>
-    <TextView
-        android:id="@+id/meaningView"
-        android:layout_centerHorizontal="true"
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/randomStudy"
         android:layout_width="350dp"
-        android:layout_height="120dp"
-        android:textSize="25sp"
-        android:textAlignment="center"
-        android:layout_below="@+id/baseView"/>
-    <TextView
-        android:id="@+id/proncView"
+        android:layout_height="50dp"
         android:layout_centerHorizontal="true"
+        android:background="#55efc4"
+        android:text="ランダム漢字学習"
+        android:textColor="@android:color/white"
+        android:textSize="24sp"
+        android:layout_below="@+id/titleView"/>
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/unknown"
         android:layout_width="350dp"
-        android:layout_height="120dp"
-        android:textSize="25sp"
-        android:textAlignment="center"
-        android:hint="pronunciation"
-        android:layout_below="@+id/meaningView"/>
+        android:layout_height="50dp"
+        android:layout_marginTop="12dp"
+        android:background="#fab1a0"
+        android:text="忘れちゃった漢字"
+        android:textColor="@android:color/white"
+        android:textSize="24sp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/randomStudy"/>
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/onlyMeaning"
+        android:layout_width="350dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="12dp"
+        android:background="#0984e3"
+        android:text="意味は分かってる！"
+        android:textColor="@android:color/white"
+        android:textSize="24sp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/unknown"/>
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/onlyPronc"
+        android:layout_width="350dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="12dp"
+        android:background="#fdcb6e"
+        android:text="発音は分かってる！"
+        android:textColor="@android:color/white"
+        android:textSize="24sp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/onlyMeaning"/>
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/phraseStudy"
+        android:layout_width="350dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="12dp"
+        android:background="#74b9ff"
+        android:text="漢字単語学習"
+        android:textColor="@android:color/white"
+        android:textSize="24sp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/onlyPronc"/>
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/verbStudy"
+        android:layout_width="350dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="12dp"
+        android:background="#fd79a8"
+        android:text="漢字がある動詞学習"
+        android:textColor="@android:color/white"
+        android:textSize="24sp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/phraseStudy"/>
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/termination"
+        android:layout_width="350dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="12dp"
+        android:background="#d63031"
+        android:text="終了"
+        android:textColor="@android:color/white"
+        android:textSize="24sp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/verbStudy"/>
 </RelativeLayout>
