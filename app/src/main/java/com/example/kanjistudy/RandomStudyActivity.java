@@ -1,13 +1,10 @@
 package com.example.kanjistudy;
 
-import android.Manifest;
-import android.content.pm.PackageManager;
-import android.os.Environment;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatButton;
+import android.view.View;
 import android.widget.TextView;
 
 import org.json.JSONArray;
@@ -16,36 +13,62 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashSet;
 
 public class RandomStudyActivity extends AppCompatActivity {
-    private TextView baseView, meaningView;
-    final static int MY_PERMISSIONS_REQUEST_READ_FILE = 9876;
+    private TextView baseView, meaningView, count;
+    AppCompatButton knowKanji, unknownKanji, knowMeaning, knowPronunce;
+    static HashSet<Integer> hashSet = new HashSet<>();
+    static int hashCount = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_random_study);
 
+        count = findViewById(R.id.count);
         baseView = findViewById(R.id.baseView);
         meaningView = findViewById(R.id.meaningView);
+        knowKanji = findViewById(R.id.knowKanji);
+        unknownKanji = findViewById(R.id.unknownKanji);
+        knowMeaning = findViewById(R.id.knowMeaning);
+        knowPronunce = findViewById(R.id.knowPronounce);
 
-        JSONObject obj = null;
         try {
-            obj = new JSONObject(loadJSONFromAsset());
+            JSONObject obj = new JSONObject(loadJSONFromAsset());
             String kanjiValue = obj.getString("hanza");
             JSONArray kanjiArray = new JSONArray(kanjiValue);
-            JSONObject obj2 = kanjiArray.getJSONObject(0);
-            String kanji = obj2.getString("kanji");
-            String meaning = obj2.getString("meaning");
-            baseView.setText(kanji);
-            meaningView.setText(meaning);
+            System.out.println("hashSet.size() : " +hashSet.size());
+            System.out.println("hashCount : " + hashCount);
+            while(hashSet.size() == hashCount) {
+                int randomNumber = (int)(Math.random() * 200) + 1;
+                System.out.println("randomNumber : " + randomNumber);
+                JSONObject obj2 = kanjiArray.getJSONObject(randomNumber);
+                String kanji = obj2.getString("kanji");
+                String meaning = obj2.getString("meaning");
+                baseView.setText(kanji);
+                meaningView.setText(meaning);
+                hashSet.add(randomNumber);
+            }
+            hashCount++;
+            count.setText(hashCount+"/200");
+            System.out.println("hashSet.size() : " +hashSet.size());
+            System.out.println("hashCount : " + hashCount);
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
+        knowKanji.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(RandomStudyActivity.this, RandomStudyActivity.class));
+            }
+        });
     }
 
+
     public String loadJSONFromAsset() {
-        String json = null;
+        String json;
         try {
             InputStream is = getAssets().open("kanji.json");
             int size = is.available();
@@ -58,60 +81,5 @@ public class RandomStudyActivity extends AppCompatActivity {
             return null;
         }
         return json;
-    }
-
-    public void fileRead() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
-                //보여줘야 할 경우에만 보여줌
-            } else {
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, MY_PERMISSIONS_REQUEST_READ_FILE);
-            }
-        } else {
-            JSONObject obj = null;
-            try {
-                obj = new JSONObject(loadJSONFromAsset());
-                String kanjiValue = obj.getString("hanza");
-                JSONArray kanjiArray = new JSONArray(kanjiValue);
-                JSONObject obj2 = kanjiArray.getJSONObject(0);
-                String kanji = obj2.getString("kanji");
-                String meaning = obj2.getString("meaning");
-                baseView.setText(kanji);
-                meaningView.setText(meaning);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           String[] permissions, int[] grantResults) {
-        switch (requestCode) {
-            case MY_PERMISSIONS_REQUEST_READ_FILE: {
-                // If request is cancelled, the result arrays are empty.
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    // permission was granted, yay! Do the
-                    // contacts-related task you need to do.
-                    Log.d("Success", "You've got Permissions");
-                    JSONObject obj = null;
-                    try {
-                        obj = new JSONObject(loadJSONFromAsset());
-                        String kanjiValue = obj.getString("hanza");
-                        JSONObject kanjiObject = new JSONObject(kanjiValue);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                } else {
-                    // permission denied, boo! Disable the
-                    // functionality that depends on this permission.
-                    Log.d("Denied", "Permission still denied");
-                }
-                return;
-            }
-
-            // other 'case' lines to check for other
-            // permissions this app might request.
-        }
     }
 }
