@@ -9,6 +9,7 @@ import android.view.View;
 public class MainActivity extends AppCompatActivity {
 
     AppCompatButton randomStudy, unknown, onlyMeaning, onlyPronc, phraseStudy, verbStudy, termination;
+    private onBackDoublePressed dp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
         phraseStudy = findViewById(R.id.phraseStudy);
         verbStudy = findViewById(R.id.verbStudy);
         termination = findViewById(R.id.termination);
+        dp = new onBackDoublePressed(this);
 
         randomStudy.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -30,5 +32,19 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        termination.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finishAffinity();
+                System.runFinalization();
+                System.exit(0);
+            }
+        });
+    }
+
+    @Override
+    public void onBackPressed() {
+        dp.onBackPressed();
     }
 }

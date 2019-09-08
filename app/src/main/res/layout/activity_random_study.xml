@@ -3,16 +3,31 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolBar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary">
+
+    </android.support.v7.widget.Toolbar>
+    <TextView
+        android:id="@+id/count"
+        android:layout_marginTop="60dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="10dp"
+        android:layout_alignParentRight="true"
+        android:hint="1/200"/>
     <TextView
         android:id="@+id/baseView"
-        android:layout_marginTop="30dp"
         android:layout_width="350dp"
         android:layout_height="350dp"
         android:fontFamily="@font/yumin"
         android:textSize="250sp"
         android:textAlignment="center"
         android:hint="W"
-        android:layout_centerHorizontal="true"/>
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/count"/>
     <TextView
         android:id="@+id/meaningView"
         android:layout_centerHorizontal="true"
