@@ -61,6 +61,17 @@
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/phraseStudy"/>
     <android.support.v7.widget.AppCompatButton
+        android:id="@+id/setup"
+        android:layout_width="350dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="12dp"
+        android:background="#e67e22"
+        android:text="設定"
+        android:textColor="@android:color/white"
+        android:textSize="24sp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/verbStudy"/>
+    <android.support.v7.widget.AppCompatButton
         android:id="@+id/termination"
         android:layout_width="350dp"
         android:layout_height="50dp"
@@ -70,5 +81,5 @@
         android:textColor="@android:color/white"
         android:textSize="24sp"
         android:layout_centerHorizontal="true"
-        android:layout_below="@+id/verbStudy"/>
+        android:layout_below="@+id/setup"/>
 </RelativeLayout>

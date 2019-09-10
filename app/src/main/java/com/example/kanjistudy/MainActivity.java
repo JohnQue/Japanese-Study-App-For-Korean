@@ -8,7 +8,7 @@ import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
 
-    AppCompatButton randomStudy, unknown, phraseStudy, verbStudy, termination;
+    AppCompatButton randomStudy, unknown, phraseStudy, verbStudy, setup, termination;
     private onBackDoublePressed dp;
 
     @Override
@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
         unknown = findViewById(R.id.unknown);
         phraseStudy = findViewById(R.id.phraseStudy);
         verbStudy = findViewById(R.id.verbStudy);
+        setup = findViewById(R.id.setup);
         termination = findViewById(R.id.termination);
         dp = new onBackDoublePressed(this);
 
@@ -33,13 +34,21 @@ public class MainActivity extends AppCompatActivity {
         unknown.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, UnknownListActivity.class));
+                Intent intent = new Intent(MainActivity.this, ListActivity.class);
+                intent.putExtra("STATUS", "unknown");
+                startActivity(intent);
             }
         });
         phraseStudy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, ListActivity.class));
+            }
+        });
+        setup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, SettingActivity.class));
             }
         });
         termination.setOnClickListener(new View.OnClickListener() {

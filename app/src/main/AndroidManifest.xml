@@ -12,8 +12,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ShowInfoActivity"></activity>
+        <activity android:name=".SettingActivity"></activity>
         <activity android:name=".ListActivity" />
+        <activity android:name=".ShowInfoActivity" />
         <activity android:name=".RandomStudyActivity" />
         <activity android:name=".UnknownListActivity" />
         <activity android:name=".MainActivity">

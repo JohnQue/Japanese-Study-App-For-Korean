@@ -1,12 +1,14 @@
 package com.example.kanjistudy;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -27,12 +29,36 @@ public class RandomStudyActivity extends AppCompatActivity {
     private static final String ONLY_KNOW_MEANING = "knowMeaning";
     private static final String ONLY_KNOW_PRONUNCE = "knowPronunce";
     private IntegerArrayPref iap = new IntegerArrayPref();
+    private ArrayList<Integer> arrayList = new ArrayList<>();
     private int randomNumber;
     AppCompatButton knowKanji, unknownKanji, knowMeaning, knowPronunce;
 
     //중복으로 랜덤 한자를 추출하지 않기 위해 만든 변수들
     static HashSet<Integer> hashSet = new HashSet<>();
     static int hashCount = 0;
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.appbar_action, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch (item.getItemId()) {
+            case android.R.id.home: { // 뒤로가기 버튼
+                finish();
+                return true;
+            }
+            case R.id.action_list: {
+                Intent intent = new Intent(RandomStudyActivity.this, ListActivity.class);
+                intent.putExtra("STATUS", "already");
+                intent.putIntegerArrayListExtra("arrayList", arrayList);
+                startActivity(intent);
+            }
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +77,7 @@ public class RandomStudyActivity extends AppCompatActivity {
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_black_24dp);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         getRandomKanji();
@@ -82,9 +109,8 @@ public class RandomStudyActivity extends AppCompatActivity {
                 ArrayList<Integer> before = iap.getIntegerArrayPref(RandomStudyActivity.this, ONLY_KNOW_MEANING);
                 if(!before.contains(randomNumber)){
                     before.add(randomNumber);
-                    iap.setIntegerArrayPref(RandomStudyActivity.this, UNKNOWN_LIST, before);
-                    ArrayList<Integer> after = iap.getIntegerArrayPref(RandomStudyActivity.this, ONLY_KNOW_MEANING);
-                    System.out.println(after);
+                    iap.setIntegerArrayPref(RandomStudyActivity.this, ONLY_KNOW_MEANING, before);
+                    Toast.makeText(RandomStudyActivity.this, "リストに追加しました！", Toast.LENGTH_SHORT).show();
                 }else{
                     Toast.makeText(RandomStudyActivity.this, "もうリストに追加しています！", Toast.LENGTH_SHORT).show();
                 }
@@ -97,7 +123,8 @@ public class RandomStudyActivity extends AppCompatActivity {
                 ArrayList<Integer> before = iap.getIntegerArrayPref(RandomStudyActivity.this, ONLY_KNOW_PRONUNCE);
                 if(!before.contains(randomNumber)){
                     before.add(randomNumber);
-                    iap.setIntegerArrayPref(RandomStudyActivity.this, UNKNOWN_LIST, before);
+                    iap.setIntegerArrayPref(RandomStudyActivity.this, ONLY_KNOW_PRONUNCE, before);
+                    Toast.makeText(RandomStudyActivity.this, "リストに追加しました！", Toast.LENGTH_SHORT).show();
                 }else{
                     Toast.makeText(RandomStudyActivity.this, "もうリストに追加しています！", Toast.LENGTH_SHORT).show();
                 }
@@ -121,6 +148,7 @@ public class RandomStudyActivity extends AppCompatActivity {
                 baseView.setText(kanji);
                 hashSet.add(randomNumber);
             }
+            arrayList.add(randomNumber);
             hashCount++;
             count.setText(hashCount + "/300");
             System.out.println("hashSet.size() : " + hashSet.size());
@@ -175,17 +203,5 @@ public class RandomStudyActivity extends AppCompatActivity {
                 );
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
-    }
-
-    //뒤로가기 버튼 클릭시 alert() 메소드 실행
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home: { // 뒤로가기 버튼
-                alert();
-                return true;
-            }
-        }
-        return super.onOptionsItemSelected(item);
     }
 }
