@@ -5,11 +5,12 @@
     android:layout_height="match_parent">
     <TextView
         android:id="@+id/titleView"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="100dp"
         android:layout_marginBottom="15dp"
         android:layout_width="350dp"
         android:layout_height="180dp"
         android:fontFamily="@font/yumin"
+        android:shadowRadius="0.5"
         android:text="常用漢字\n勉強\nアップり"
         android:textSize="50sp"
         android:textAlignment="center"
@@ -30,33 +31,13 @@
         android:layout_height="50dp"
         android:layout_marginTop="12dp"
         android:background="#fab1a0"
-        android:text="忘れちゃった漢字"
+        android:text="漢字リスト"
         android:textColor="@android:color/white"
         android:textSize="24sp"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/randomStudy"/>
-    <android.support.v7.widget.AppCompatButton
-        android:id="@+id/onlyMeaning"
-        android:layout_width="350dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="12dp"
-        android:background="#0984e3"
-        android:text="意味は分かってる！"
-        android:textColor="@android:color/white"
-        android:textSize="24sp"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/unknown"/>
-    <android.support.v7.widget.AppCompatButton
-        android:id="@+id/onlyPronc"
-        android:layout_width="350dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="12dp"
-        android:background="#fdcb6e"
-        android:text="発音は分かってる！"
-        android:textColor="@android:color/white"
-        android:textSize="24sp"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/onlyMeaning"/>
+
+
     <android.support.v7.widget.AppCompatButton
         android:id="@+id/phraseStudy"
         android:layout_width="350dp"
@@ -67,7 +48,7 @@
         android:textColor="@android:color/white"
         android:textSize="24sp"
         android:layout_centerHorizontal="true"
-        android:layout_below="@+id/onlyPronc"/>
+        android:layout_below="@+id/unknown"/>
     <android.support.v7.widget.AppCompatButton
         android:id="@+id/verbStudy"
         android:layout_width="350dp"

@@ -1,10 +1,8 @@
 package com.example.kanjistudy;
 
-import android.content.Context;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
@@ -24,10 +22,11 @@ import java.util.ArrayList;
 import java.util.HashSet;
 
 public class RandomStudyActivity extends AppCompatActivity {
-    private TextView baseView, meaningView, count;
+    private TextView baseView, count;
     private static final String UNKNOWN_LIST = "unknown";
     private static final String ONLY_KNOW_MEANING = "knowMeaning";
     private static final String ONLY_KNOW_PRONUNCE = "knowPronunce";
+    private IntegerArrayPref iap = new IntegerArrayPref();
     private int randomNumber;
     AppCompatButton knowKanji, unknownKanji, knowMeaning, knowPronunce;
 
@@ -41,9 +40,9 @@ public class RandomStudyActivity extends AppCompatActivity {
         setContentView(R.layout.activity_random_study);
 
         Toolbar toolbar = findViewById(R.id.toolBar);
+        toolbar.setTitleTextColor(Color.WHITE);
         count = findViewById(R.id.count);
         baseView = findViewById(R.id.baseView);
-        meaningView = findViewById(R.id.meaningView);
         knowKanji = findViewById(R.id.knowKanji);
         unknownKanji = findViewById(R.id.unknownKanji);
         knowMeaning = findViewById(R.id.knowMeaning);
@@ -66,12 +65,11 @@ public class RandomStudyActivity extends AppCompatActivity {
         unknownKanji.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ArrayList<Integer> before = getStringArrayPref(RandomStudyActivity.this, UNKNOWN_LIST);
+                ArrayList<Integer> before = iap.getIntegerArrayPref(RandomStudyActivity.this, UNKNOWN_LIST);
                 if(!before.contains(randomNumber)){
                     before.add(randomNumber);
-                    setStringArrayPref(RandomStudyActivity.this, UNKNOWN_LIST, before);
-                    ArrayList<Integer> after = getStringArrayPref(RandomStudyActivity.this, UNKNOWN_LIST);
-                    System.out.println(after);
+                    iap.setIntegerArrayPref(RandomStudyActivity.this, UNKNOWN_LIST, before);
+                    Toast.makeText(RandomStudyActivity.this, "リストに追加しました！", Toast.LENGTH_SHORT).show();
                 }else{
                     Toast.makeText(RandomStudyActivity.this, "もうリストに追加しています！", Toast.LENGTH_SHORT).show();
                 }
@@ -81,11 +79,11 @@ public class RandomStudyActivity extends AppCompatActivity {
         knowMeaning.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ArrayList<Integer> before = getStringArrayPref(RandomStudyActivity.this, ONLY_KNOW_MEANING);
+                ArrayList<Integer> before = iap.getIntegerArrayPref(RandomStudyActivity.this, ONLY_KNOW_MEANING);
                 if(!before.contains(randomNumber)){
                     before.add(randomNumber);
-                    setStringArrayPref(RandomStudyActivity.this, UNKNOWN_LIST, before);
-                    ArrayList<Integer> after = getStringArrayPref(RandomStudyActivity.this, ONLY_KNOW_MEANING);
+                    iap.setIntegerArrayPref(RandomStudyActivity.this, UNKNOWN_LIST, before);
+                    ArrayList<Integer> after = iap.getIntegerArrayPref(RandomStudyActivity.this, ONLY_KNOW_MEANING);
                     System.out.println(after);
                 }else{
                     Toast.makeText(RandomStudyActivity.this, "もうリストに追加しています！", Toast.LENGTH_SHORT).show();
@@ -96,12 +94,10 @@ public class RandomStudyActivity extends AppCompatActivity {
         knowPronunce.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ArrayList<Integer> before = getStringArrayPref(RandomStudyActivity.this, ONLY_KNOW_PRONUNCE);
+                ArrayList<Integer> before = iap.getIntegerArrayPref(RandomStudyActivity.this, ONLY_KNOW_PRONUNCE);
                 if(!before.contains(randomNumber)){
                     before.add(randomNumber);
-                    setStringArrayPref(RandomStudyActivity.this, UNKNOWN_LIST, before);
-                    ArrayList<Integer> after = getStringArrayPref(RandomStudyActivity.this, ONLY_KNOW_PRONUNCE);
-                    System.out.println(after);
+                    iap.setIntegerArrayPref(RandomStudyActivity.this, UNKNOWN_LIST, before);
                 }else{
                     Toast.makeText(RandomStudyActivity.this, "もうリストに追加しています！", Toast.LENGTH_SHORT).show();
                 }
@@ -122,9 +118,7 @@ public class RandomStudyActivity extends AppCompatActivity {
                 System.out.println("randomNumber : " + randomNumber);
                 JSONObject obj2 = kanjiArray.getJSONObject(randomNumber);
                 String kanji = obj2.getString("kanji");
-                String meaning = obj2.getString("meaning");
                 baseView.setText(kanji);
-                meaningView.setText(meaning);
                 hashSet.add(randomNumber);
             }
             hashCount++;
@@ -193,37 +187,5 @@ public class RandomStudyActivity extends AppCompatActivity {
             }
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    private void setStringArrayPref(Context context, String key, ArrayList<Integer> values){
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        SharedPreferences.Editor editor = prefs.edit();
-        int size = values.size();
-        JSONArray a = new JSONArray();
-        for (int i=0; i<size; i++){
-            a.put(values.get(i));
-        }
-        if(!values.isEmpty()) editor.putString(key, a.toString());
-        else editor.putString(key, null);
-        editor.apply();
-    }
-
-    private ArrayList<Integer> getStringArrayPref(Context context, String key){
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        String json = prefs.getString(key, null);
-        ArrayList<Integer> urls = new ArrayList<>();
-        if(json != null){
-            try{
-                JSONArray a = new JSONArray(json);
-                int size = a.length();
-                for(int i=0; i<size; i++){
-                    int url = a.optInt(i);
-                    urls.add(url);
-                }
-            }catch(JSONException e){
-                e.printStackTrace();
-            }
-        }
-        return urls;
     }
 }

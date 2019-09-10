@@ -12,69 +12,55 @@
 
     </android.support.v7.widget.Toolbar>
     <TextView
-        android:id="@+id/count"
-        android:layout_marginTop="60dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="10dp"
-        android:layout_alignParentRight="true"
-        android:hint="1/200"/>
+        android:layout_marginTop="30dp"
+        android:id="@+id/countText"
+        android:layout_centerHorizontal="true"
+        android:layout_width="350dp"
+        android:layout_height="40dp"
+        android:textSize="28dp"
+        android:textAlignment="center"
+        android:hint="2136中 x番目"
+        android:layout_below="@id/toolBar"/>
     <TextView
-        android:id="@+id/baseView"
+        android:id="@+id/kanji"
         android:layout_width="350dp"
         android:layout_height="350dp"
         android:fontFamily="@font/yumin"
-        android:textSize="250sp"
+        android:textSize="250dp"
         android:textAlignment="center"
         android:hint="W"
+        android:layout_marginTop="100dp"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/count"/>
     <TextView
+        android:id="@+id/meaning"
+        android:layout_centerHorizontal="true"
+        android:layout_width="350dp"
+        android:layout_height="40dp"
+        android:textSize="28dp"
+        android:textAlignment="center"
+        android:hint="Meaning"
+        android:layout_below="@+id/kanji"/>
+    <TextView
+        android:id="@+id/pronunce"
         android:layout_centerHorizontal="true"
         android:layout_width="350dp"
         android:layout_height="80dp"
-        android:textSize="25sp"
+        android:textSize="22dp"
         android:textAlignment="center"
-        android:text="この漢字の意味と発音を\nご存じますか？"
-        android:layout_below="@+id/baseView"/>
+        android:hint="Pronunciation"
+        android:layout_below="@+id/meaning"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:orientation="vertical">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <android.support.v7.widget.AppCompatButton
-                android:id="@+id/unknownKanji"
-                android:layout_weight="0.5"
-                android:layout_width="0dp"
-                android:textSize="16sp"
-                android:text="分からん/忘れちゃった"
-                android:textColor="@android:color/white"
-                android:backgroundTint="#c0392b"
-                android:layout_height="wrap_content" />
-            <android.support.v7.widget.AppCompatButton
-                android:id="@+id/knowKanji"
-                android:layout_weight="0.5"
-                android:layout_width="0dp"
-                android:text="ちゃんと分かってる"
-                android:textSize="16sp"
-                android:backgroundTint="#2ecc71"
-                android:textColor="@android:color/white"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
             android:orientation="horizontal">
             <android.support.v7.widget.AppCompatButton
                 android:id="@+id/knowMeaning"
                 android:layout_weight="0.5"
                 android:layout_width="0dp"
-                android:text="意味だけ…。"
+                android:text="本当にわからん"
                 android:textSize="16sp"
                 android:backgroundTint="#f1c40f"
                 android:textColor="@android:color/white"
@@ -83,11 +69,10 @@
                 android:id="@+id/knowPronounce"
                 android:layout_weight="0.5"
                 android:layout_width="0dp"
-                android:text="発音だけ…。"
+                android:text="リストで削除"
                 android:textSize="16sp"
                 android:backgroundTint="#16a085"
                 android:textColor="@android:color/white"
                 android:layout_height="wrap_content" />
         </LinearLayout>
-    </LinearLayout>
 </RelativeLayout>
