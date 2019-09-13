@@ -47,7 +47,7 @@ public class RandomStudyActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()) {
             case android.R.id.home: { // 뒤로가기 버튼
-                finish();
+                alert();
                 return true;
             }
             case R.id.action_list: {
@@ -141,7 +141,7 @@ public class RandomStudyActivity extends AppCompatActivity {
             System.out.println("hashSet.size() : " + hashSet.size());
             System.out.println("hashCount : " + hashCount);
             while (hashSet.size() == hashCount) {
-                randomNumber = (int) (Math.random() * 300) + 1;
+                randomNumber = (int) (Math.random() * 500) + 1;
                 System.out.println("randomNumber : " + randomNumber);
                 JSONObject obj2 = kanjiArray.getJSONObject(randomNumber);
                 String kanji = obj2.getString("kanji");
@@ -150,7 +150,7 @@ public class RandomStudyActivity extends AppCompatActivity {
             }
             arrayList.add(randomNumber);
             hashCount++;
-            count.setText(hashCount + "/300");
+            count.setText(hashCount + "/500");
             System.out.println("hashSet.size() : " + hashSet.size());
             System.out.println("hashCount : " + hashCount);
         } catch (
